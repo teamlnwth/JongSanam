@@ -35,6 +35,10 @@ export default async function ProfilePage() {
   const fmtTime = (d: Date) =>
     d.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Bangkok' })
 
+  const avgRating = profile.reviewsReceived?.length > 0 
+    ? (profile.reviewsReceived.reduce((sum: number, r: any) => sum + r.rating, 0) / profile.reviewsReceived.length).toFixed(1)
+    : '-'
+
   return (
     <main className="min-h-screen bg-slate-50/50 p-4 md:p-10 text-slate-800">
       <div className="max-w-5xl mx-auto space-y-10">
@@ -59,9 +63,14 @@ export default async function ProfilePage() {
                 </div>
                 <div>
                   <h2 className="text-xl font-extrabold text-slate-800 leading-tight">ข้อมูลบัญชี</h2>
-                  <p className="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md inline-block mt-1">
-                    {profile.role === 'ADMIN' ? '👑 ADMIN' : '👤 USER'}
-                  </p>
+                  <div className="flex flex-wrap gap-2 items-center mt-1.5">
+                    <p className="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md inline-block">
+                      {profile.role === 'ADMIN' ? '👑 ADMIN' : '👤 USER'}
+                    </p>
+                    <p className="text-xs font-bold text-amber-600 bg-amber-50 border border-amber-100 px-2 py-0.5 rounded-md flex items-center gap-1 shadow-sm">
+                      <span className="text-amber-500">⭐</span> {avgRating} <span className="text-amber-500/70 font-medium">({profile.reviewsReceived?.length || 0})</span>
+                    </p>
+                  </div>
                 </div>
               </div>
 

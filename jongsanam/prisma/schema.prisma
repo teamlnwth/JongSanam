@@ -7,17 +7,20 @@ datasource db {
 }
 
 model Profile {
-  id           String    @id @default(cuid())
-  name         String?
-  email        String    @unique
-  image        String?  
-  promptpayQR  String?  
-  role         String    @default("USER")
-  isBanned     Boolean   @default(false)
+  id              String    @id @default(cuid())
+  name            String?
+  email           String    @unique
+  image           String?  
+  promptpayQR     String?  
+  role            String    @default("USER")
+  isBanned        Boolean   @default(false)
   
-  posts        Post[]
-  bookings     Booking[]
-  comments     Comment[]
+  posts           Post[]
+  bookings        Booking[]
+  comments        Comment[]
+  
+  reviewsGiven    Review[]  @relation("ReviewsGiven")
+  reviewsReceived Review[]  @relation("ReviewsReceived")
 }
 
 enum SportType {
@@ -43,6 +46,7 @@ model Post {
   
   bookings       Booking[]
   comments       Comment[]
+  reviews        Review[]
   createdAt      DateTime  @default(now())
 }
 
@@ -69,4 +73,22 @@ model Comment {
   
   userId    String
   user      Profile  @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Review {
+  id         String   @id @default(cuid())
+  rating     Int      
+  comment    String?  
+  createdAt  DateTime @default(now())
+
+  reviewerId String
+  reviewer   Profile  @relation("ReviewsGiven", fields: [reviewerId], references: [id], onDelete: Cascade)
+
+  revieweeId String
+  reviewee   Profile  @relation("ReviewsReceived", fields: [revieweeId], references: [id], onDelete: Cascade)
+
+  postId     String?
+  post       Post?    @relation(fields: [postId], references: [id], onDelete: SetNull)
+  
+  @@unique([reviewerId, revieweeId, postId]) 
 }

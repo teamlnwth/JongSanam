@@ -218,3 +218,48 @@ export async function addComment(postId: string, formData: FormData) {
 
   revalidatePath(`/posts/${postId}`)
 }
+
+export async function submitReview(formData: FormData) {
+  const user = await getUser()
+  const revieweeId = formData.get('revieweeId') as string
+  const postId = formData.get('postId') as string
+  const rating = Number(formData.get('rating'))
+  const comment = formData.get('comment') as string | null
+
+  if (!revieweeId || !postId || rating < 1 || rating > 5) {
+    throw new Error('Invalid input')
+  }
+
+  // Prevent self-review
+  if (user.id === revieweeId) {
+    throw new Error('Cannot review yourself')
+  }
+
+  // Check if already reviewed
+  const existingReview = await prisma.review.findUnique({
+    where: {
+      reviewerId_revieweeId_postId: {
+        reviewerId: user.id,
+        revieweeId,
+        postId,
+      }
+    }
+  })
+
+  if (existingReview) {
+    throw new Error('คุณได้รีวิวผู้เล่นคนนี้ในแมตช์นี้ไปแล้ว')
+  }
+
+  await prisma.review.create({
+    data: {
+      rating,
+      comment,
+      reviewerId: user.id,
+      revieweeId,
+      postId,
+    }
+  })
+
+  revalidatePath(`/posts/${postId}`)
+  revalidatePath('/profile')
+}

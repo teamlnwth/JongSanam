@@ -1,7 +1,7 @@
 import prisma from '@/lib/prisma'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import { joinMatch, cancelPost, kickParticipant, addComment } from '@/app/actions'
+import { joinMatch, cancelPost, kickParticipant, addComment, submitReview } from '@/app/actions'
 import { createClient } from '@/lib/supabase/server'
 import { SubmitButton } from '@/components/SubmitButton'
 
@@ -26,7 +26,8 @@ export default async function PostDetailPage({
       comments: {
         include: { user: true },
         orderBy: { createdAt: 'asc' },
-      }
+      },
+      reviews: true
     },
   })
 
@@ -220,7 +221,7 @@ export default async function PostDetailPage({
               {post.bookings.map((booking: typeof post.bookings[0], index: number) => (
                 <li
                   key={booking.id}
-                  className="flex items-center gap-4 p-4 bg-slate-50 rounded-2xl hover:bg-slate-100 transition-colors border border-slate-100"
+                  className="flex flex-wrap items-center gap-4 p-4 bg-slate-50 rounded-2xl hover:bg-slate-100 transition-colors border border-slate-100"
                 >
                   <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-600 to-indigo-600 text-white flex items-center justify-center font-black shadow-inner shadow-blue-800 text-lg shrink-0 border border-blue-400/20">
                     {index + 1}
@@ -234,18 +235,40 @@ export default async function PostDetailPage({
                     </p>
                   </div>
                   {index === 0 ? (
-                    <span className="text-[10px] bg-gradient-to-r from-amber-200 to-yellow-400 text-yellow-900 border border-yellow-300/50 px-2.5 py-1 rounded-lg font-black shrink-0 tracking-wide shadow-sm">
+                    <span className="text-[10px] bg-gradient-to-r from-amber-200 to-yellow-400 text-yellow-900 border border-yellow-300/50 px-2.5 py-1 rounded-lg font-black shrink-0 tracking-wide shadow-sm self-start">
                       HOST ⭐
                     </span>
                   ) : (
                     isHost && (
-                      <form action={kickParticipant.bind(null, post.id, booking.id)} className="shrink-0">
+                      <form action={kickParticipant.bind(null, post.id, booking.id)} className="shrink-0 self-start">
                         <SubmitButton pendingText="" className="text-[11px] bg-red-50 text-red-600 hover:bg-red-500 hover:text-white px-3 py-1.5 rounded-lg border border-red-200 font-bold tracking-wide shadow-sm">
                           เตะออก
                         </SubmitButton>
                       </form>
                     )
                   )}
+
+                  {/* Rating Form */}
+                  <div className="w-full mt-3 col-span-2 sm:col-span-1">
+                    {user?.id !== booking.user?.id && (isJoined || isHost) && !post.reviews?.some((r: any) => r.reviewerId === user?.id && r.revieweeId === booking.userId) && (
+                      <form action={submitReview} className="flex gap-2 items-center bg-white p-2 rounded-xl border border-slate-200 shadow-[0_2px_10px_rgb(0,0,0,0.02)]">
+                        <input type="hidden" name="revieweeId" value={booking.userId} />
+                        <input type="hidden" name="postId" value={post.id} />
+                        <select name="rating" required defaultValue="" className="text-xs shrink-0 rounded-lg px-2 py-1.5 border border-slate-300 font-bold focus:ring-2 focus:ring-amber-400 focus:outline-none bg-amber-50/30 text-amber-900 cursor-pointer">
+                           <option value="" disabled>ให้ดาว</option>
+                           <option value="5">5 ⭐ ดีเยี่ยม</option>
+                           <option value="4">4 ⭐ ดี</option>
+                           <option value="3">3 ⭐ ปานกลาง</option>
+                           <option value="2">2 ⭐ แย่</option>
+                           <option value="1">1 ⭐ แย่มาก</option>
+                        </select>
+                        <input type="text" name="comment" placeholder="รีวิวสั้นๆ (ตัวเลือก)" autoComplete="off" className="text-xs px-3 py-1.5 min-w-[100px] w-full rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-400 focus:outline-none placeholder:text-slate-400 font-medium bg-slate-50" />
+                        <SubmitButton pendingText="ส่ง.." className="text-[10px] bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-700 hover:to-indigo-700 px-3 py-1.5 rounded-lg transition-all font-bold tracking-wide shadow-sm shrink-0">
+                          ส่งรีวิว
+                        </SubmitButton>
+                      </form>
+                    )}
+                  </div>
                 </li>
               ))}
             </ul>

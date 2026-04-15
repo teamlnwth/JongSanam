@@ -1,5 +1,6 @@
 import { signIn } from '@/app/auth/actions'
 import Link from 'next/link'
+import { SubmitButton } from '@/components/SubmitButton'
 
 export default async function LoginPage({
   searchParams,
@@ -60,12 +61,12 @@ export default async function LoginPage({
               />
             </div>
 
-            <button
-              type="submit"
-              className="w-full bg-blue-500 hover:bg-blue-400 text-white font-bold py-3 rounded-xl transition-all duration-200 shadow-lg hover:shadow-blue-500/30 mt-2"
+            <SubmitButton
+              isFullWidth
+              className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-3 rounded-xl shadow-lg hover:shadow-blue-500/30 mt-2"
             >
               เข้าสู่ระบบ
-            </button>
+            </SubmitButton>
           </form>
 
           <p className="text-center text-blue-300 text-sm mt-6">

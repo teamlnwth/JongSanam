@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { joinMatch, cancelPost, kickParticipant, addComment } from '@/app/actions'
 import { createClient } from '@/lib/supabase/server'
+import { SubmitButton } from '@/components/SubmitButton'
 
 export default async function PostDetailPage({
   params,
@@ -160,12 +161,12 @@ export default async function PostDetailPage({
 
               {isHost && !isCancelled && (
                 <form action={cancelPost.bind(null, post.id)}>
-                  <button
-                    type="submit"
-                    className="w-full text-red-600 font-bold bg-white border-2 border-red-100 hover:border-red-200 hover:bg-red-50 py-4 rounded-2xl transition-all shadow-sm active:scale-95"
+                  <SubmitButton
+                    isFullWidth
+                    className="text-red-600 font-bold bg-white border-2 border-red-100 hover:border-red-200 hover:bg-red-50 py-4 rounded-2xl shadow-sm"
                   >
                     🗑️ ยกเลิกข้อมูลสนาม (ลบโพสต์)
-                  </button>
+                  </SubmitButton>
                 </form>
               )}
 
@@ -185,16 +186,17 @@ export default async function PostDetailPage({
                       />
                     </div>
                   )}
-                  <button
+                  <SubmitButton
+                    isFullWidth
                     disabled={isFull}
-                    className={`w-full py-4 rounded-2xl font-black text-white text-lg transition-all shadow-lg active:scale-95 ${
+                    className={`py-4 rounded-2xl font-black text-white text-lg shadow-lg ${
                       isFull 
-                        ? 'bg-slate-300 text-slate-500 cursor-not-allowed shadow-none active:scale-100' 
+                        ? 'bg-slate-300 text-slate-500 cursor-not-allowed shadow-none' 
                         : 'bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 shadow-emerald-500/30 hover:shadow-emerald-500/40 hover:-translate-y-0.5'
                     }`}
                   >
                     {isFull ? '🚫 ที่เต็มแล้ว' : '✅ ยืนยันเข้าร่วมกดจองเลย!'}
-                  </button>
+                  </SubmitButton>
                 </form>
               )}
             </div>
@@ -238,9 +240,9 @@ export default async function PostDetailPage({
                   ) : (
                     isHost && (
                       <form action={kickParticipant.bind(null, post.id, booking.id)} className="shrink-0">
-                        <button type="submit" className="text-[11px] bg-red-50 text-red-600 hover:bg-red-500 hover:text-white px-3 py-1.5 rounded-lg border border-red-200 transition-all font-bold tracking-wide shadow-sm active:scale-95">
+                        <SubmitButton pendingText="" className="text-[11px] bg-red-50 text-red-600 hover:bg-red-500 hover:text-white px-3 py-1.5 rounded-lg border border-red-200 font-bold tracking-wide shadow-sm">
                           เตะออก
-                        </button>
+                        </SubmitButton>
                       </form>
                     )
                   )}
@@ -298,9 +300,9 @@ export default async function PostDetailPage({
                   autoComplete="off"
                   className="flex-1 bg-slate-50 border border-slate-200 rounded-full px-5 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all placeholder:text-slate-400"
                 />
-                <button type="submit" className="w-11 h-11 shrink-0 bg-blue-600 hover:bg-blue-500 text-white rounded-full flex items-center justify-center transition-all shadow-md active:scale-95 group">
+                <SubmitButton pendingText="" className="w-11 h-11 shrink-0 bg-blue-600 hover:bg-blue-500 text-white rounded-full flex items-center justify-center shadow-md group">
                   <span className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform font-bold text-lg">🚀</span>
-                </button>
+                </SubmitButton>
               </form>
             </div>
           </div>

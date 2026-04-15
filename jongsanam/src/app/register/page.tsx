@@ -1,5 +1,6 @@
 import { signUp } from '@/app/auth/actions'
 import Link from 'next/link'
+import { SubmitButton } from '@/components/SubmitButton'
 
 export default async function RegisterPage({
   searchParams,
@@ -68,12 +69,12 @@ export default async function RegisterPage({
               />
             </div>
 
-            <button
-              type="submit"
-              className="w-full bg-green-500 hover:bg-green-400 text-white font-bold py-3 rounded-xl transition-all duration-200 shadow-lg hover:shadow-green-500/30 mt-2"
+            <SubmitButton
+              isFullWidth
+              className="bg-green-500 hover:bg-green-400 text-white font-bold py-3 rounded-xl shadow-lg hover:shadow-green-500/30 mt-2"
             >
               สมัครสมาชิก
-            </button>
+            </SubmitButton>
           </form>
 
           <p className="text-center text-blue-300 text-sm mt-6">

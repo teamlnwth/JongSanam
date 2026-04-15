@@ -1,6 +1,7 @@
 import prisma from '@/lib/prisma'
 import { createBookingPost, joinMatch } from './actions'
 import Link from 'next/link'
+import { SubmitButton } from '@/components/SubmitButton'
 
 
 export default async function Home({
@@ -85,9 +86,9 @@ export default async function Home({
               <input name="passcode" type="password" placeholder="รหัสผ่านห้อง (เว้นว่างถ้าเป็นห้องเปิด)" className="w-full bg-slate-50 border border-slate-200 py-4 pr-4 pl-10 rounded-2xl focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 focus:outline-none transition-all placeholder:text-slate-400 font-medium" />
             </div>
 
-            <button type="submit" className="md:col-span-2 mt-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold text-lg py-4 rounded-2xl shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200">
+            <SubmitButton isFullWidth className="md:col-span-2 mt-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold text-lg py-4 rounded-2xl shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200">
               โพสต์หาเพื่อนเตะ 🚀
-            </button>
+            </SubmitButton>
           </form>
         </div>
 

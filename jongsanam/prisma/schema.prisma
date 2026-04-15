@@ -1,0 +1,55 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Profile {
+  id           String    @id @default(cuid())
+  name         String?
+  email        String    @unique
+  image        String?  
+  promptpayQR  String?  
+  
+  posts        Post[]
+  bookings     Booking[]
+}
+
+enum SportType {
+  FOOTBALL
+  FUTSAL
+}
+
+model Post {
+  id             String    @id @default(cuid())
+  title          String?
+  sportType      SportType
+  fieldName      String    
+  startTime      DateTime  
+  duration       Int       
+  totalPrice     Decimal   @db.Decimal(10, 2) 
+  maxPlayers     Int       
+  description    String?
+  status         String    @default("OPEN") 
+  
+  hostId         String
+  host           Profile   @relation(fields: [hostId], references: [id])
+  
+  bookings       Booking[]
+  createdAt      DateTime  @default(now())
+}
+
+model Booking {
+  id        String   @id @default(cuid())
+  postId    String
+  userId    String
+  status    String   @default("JOINED") 
+  
+  post      Post     @relation(fields: [postId], references: [id])
+  user      Profile  @relation(fields: [userId], references: [id])
+  joinedAt  DateTime @default(now())
+
+  @@unique([postId, userId]) 
+}

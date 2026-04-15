@@ -1,7 +1,7 @@
 import prisma from '@/lib/prisma'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import { joinMatch, cancelPost } from '@/app/actions'
+import { joinMatch, cancelPost, kickParticipant } from '@/app/actions'
 import { createClient } from '@/lib/supabase/server'
 
 export default async function PostDetailPage({
@@ -227,10 +227,18 @@ export default async function PostDetailPage({
                       เข้าร่วมเมื่อ {booking.joinedAt.toLocaleDateString('th-TH', { dateStyle: 'short', timeZone: 'Asia/Bangkok' })}
                     </p>
                   </div>
-                  {index === 0 && (
+                  {index === 0 ? (
                     <span className="text-[10px] bg-gradient-to-r from-amber-200 to-yellow-400 text-yellow-900 border border-yellow-300/50 px-2.5 py-1 rounded-lg font-black shrink-0 tracking-wide shadow-sm">
                       HOST ⭐
                     </span>
+                  ) : (
+                    isHost && (
+                      <form action={kickParticipant.bind(null, post.id, booking.id)} className="shrink-0">
+                        <button type="submit" className="text-[11px] bg-red-50 text-red-600 hover:bg-red-500 hover:text-white px-3 py-1.5 rounded-lg border border-red-200 transition-all font-bold tracking-wide shadow-sm active:scale-95">
+                          เตะออก
+                        </button>
+                      </form>
+                    )
                   )}
                 </li>
               ))}

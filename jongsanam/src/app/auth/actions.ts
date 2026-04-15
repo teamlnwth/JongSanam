@@ -34,7 +34,8 @@ export async function signUp(formData: FormData) {
   })
 
   revalidatePath('/', 'layout')
-  redirect('/')
+  const message = 'ได้ส่งข้อความยืนยันไปในเมลแล้ว โปรดยืนยันแล้วกลับมาเข้าสู่ระบบอีกครั้ง'
+  redirect(`/login?message=${encodeURIComponent(message)}`)
 }
 
 export async function signIn(formData: FormData) {

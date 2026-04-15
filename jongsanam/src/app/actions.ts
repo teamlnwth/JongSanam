@@ -60,7 +60,7 @@ export async function createBookingPost(formData: FormData) {
 
   const durationHours = Number(formData.get('duration'))
 
-  await prisma.post.create({
+  const newPost = await prisma.post.create({
     data: {
       fieldName: formData.get('fieldName') as string,
       sportType: formData.get('sportType') as 'FOOTBALL' | 'FUTSAL',
@@ -73,7 +73,41 @@ export async function createBookingPost(formData: FormData) {
     },
   })
 
+  // Auto-join the host
+  await prisma.booking.create({
+    data: {
+      postId: newPost.id,
+      userId: user.id,
+    },
+  })
+
   revalidatePath('/')
+}
+
+export async function kickParticipant(postId: string, bookingId: string) {
+  const user = await getUser()
+
+  const post = await prisma.post.findUnique({
+    where: { id: postId },
+  })
+
+  if (!post || (post.hostId !== user.id && user.role !== 'ADMIN')) {
+    redirect(`/posts/${postId}?error=${encodeURIComponent('คุณไม่มีสิทธิ์ลบผู้ใช้ในโพสต์นี้')}`)
+  }
+
+  const booking = await prisma.booking.findUnique({ where: { id: bookingId } })
+  if (!booking) return
+
+  if (booking.userId === post.hostId) {
+    redirect(`/posts/${postId}?error=${encodeURIComponent('ไม่สามารถลบโฮสต์ออกจากสนามได้')}`)
+  }
+
+  await prisma.booking.delete({
+    where: { id: bookingId },
+  })
+
+  revalidatePath(`/posts/${postId}`)
+  redirect(`/posts/${postId}`)
 }
 
 export async function joinMatch(postId: string, formData?: FormData) {

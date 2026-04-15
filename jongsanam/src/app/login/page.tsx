@@ -4,9 +4,9 @@ import Link from 'next/link'
 export default async function LoginPage({
   searchParams,
 }: {
-  searchParams: Promise<{ error?: string }>
+  searchParams: Promise<{ error?: string; message?: string }>
 }) {
-  const { error } = await searchParams
+  const { error, message } = await searchParams
 
   return (
     <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-950 via-blue-900 to-indigo-900 p-4">
@@ -24,6 +24,12 @@ export default async function LoginPage({
           {error && (
             <div className="bg-red-500/20 border border-red-400/40 text-red-200 rounded-lg px-4 py-3 mb-5 text-sm">
               ⚠️ {decodeURIComponent(error)}
+            </div>
+          )}
+
+          {message && (
+            <div className="bg-emerald-500/20 border border-emerald-400/40 text-emerald-200 rounded-lg px-4 py-3 mb-5 text-sm">
+              ✅ {decodeURIComponent(message)}
             </div>
           )}
 

@@ -111,7 +111,7 @@ export default async function Home({
           )}
 
           <div className="grid gap-6">
-            {posts.map((post) => {
+            {posts.map((post: typeof posts[0]) => {
               const pricePerPerson = Number(post.totalPrice) / post.maxPlayers;
               const currentPlayers = post.bookings.length;
               const isFull = currentPlayers >= post.maxPlayers;

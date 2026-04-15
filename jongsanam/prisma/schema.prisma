@@ -12,6 +12,8 @@ model Profile {
   email        String    @unique
   image        String?  
   promptpayQR  String?  
+  role         String    @default("USER")
+  isBanned     Boolean   @default(false)
   
   posts        Post[]
   bookings     Booking[]
@@ -32,6 +34,7 @@ model Post {
   totalPrice     Decimal   @db.Decimal(10, 2) 
   maxPlayers     Int       
   description    String?
+  passcode       String?
   status         String    @default("OPEN") 
   
   hostId         String

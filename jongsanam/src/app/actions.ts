@@ -25,14 +25,16 @@ export async function createBookingPost(formData: FormData) {
     },
   })
 
+  const durationHours = Number(formData.get('duration'))
+
   await prisma.post.create({
     data: {
       fieldName: formData.get('fieldName') as string,
       sportType: formData.get('sportType') as 'FOOTBALL' | 'FUTSAL',
       totalPrice: Number(formData.get('totalPrice')),
       maxPlayers: Number(formData.get('maxPlayers')),
-      duration: 120,
-      startTime: new Date(),
+      startTime: new Date(formData.get('startTime') as string),
+      duration: Math.round(durationHours * 60), // แปลงชั่วโมง → นาที
       hostId: user.id,
     },
   })

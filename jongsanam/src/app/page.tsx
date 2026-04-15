@@ -1,5 +1,7 @@
 import prisma from '@/lib/prisma'
 import { createBookingPost, joinMatch } from './actions'
+import Link from 'next/link'
+
 
 export default async function Home() {
   const posts = await prisma.post.findMany({
@@ -28,8 +30,18 @@ export default async function Home() {
               <option value="FUTSAL">ฟุตซอล (5 คน)</option>
             </select>
             <input type="number" name="maxPlayers" placeholder="ต้องการคนกี่คน?" required className="border p-2 rounded" />
+            <div className="col-span-2 grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-xs text-gray-500 mb-1">วันและเวลาเริ่ม</label>
+                <input type="datetime-local" name="startTime" required className="border p-2 rounded w-full" />
+              </div>
+              <div>
+                <label className="block text-xs text-gray-500 mb-1">ระยะเวลา (ชั่วโมง)</label>
+                <input type="number" name="duration" placeholder="เช่น 2" min="1" max="12" step="0.5" required className="border p-2 rounded w-full" />
+              </div>
+            </div>
             <input type="number" name="totalPrice" placeholder="ราคาสนามรวม (บาท)" required className="border p-2 rounded" />
-            <button type="submit" className="bg-blue-600 text-white font-bold py-2 rounded hover:bg-blue-700 transition col-span-2">
+            <button type="submit" className="bg-blue-600 text-white font-bold py-2 rounded hover:bg-blue-700 transition">
               โพสต์หาเพื่อนเตะ
             </button>
           </form>
@@ -47,17 +59,33 @@ export default async function Home() {
 
             return (
               <div key={post.id} className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex justify-between items-center">
-                <div>
-                  <div className="flex items-center space-x-2">
-                    <span className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full font-semibold">
-                      {post.sportType}
-                    </span>
-                    <h3 className="text-lg font-bold">{post.fieldName}</h3>
-                  </div>
+              <div>
+                  <Link href={`/posts/${post.id}`} className="group">
+                    <div className="flex items-center space-x-2">
+                      <span className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full font-semibold">
+                        {post.sportType}
+                      </span>
+                      <h3 className="text-lg font-bold group-hover:text-blue-600 transition">{post.fieldName}</h3>
+                    </div>
+                  </Link>
                   <p className="text-gray-500 text-sm mt-1">
                     โฮสต์: {post.host?.name || 'ไม่ระบุชื่อ'} | ราคารวม ฿{Number(post.totalPrice).toLocaleString()}
                   </p>
-                  <p className="text-red-500 font-semibold mt-2">
+                  <p className="text-gray-600 text-sm mt-1">
+                    🕐 {post.startTime.toLocaleString('th-TH', {
+                      dateStyle: 'short',
+                      timeStyle: 'short',
+                      timeZone: 'Asia/Bangkok',
+                    })}
+                    {' → '}
+                    {new Date(post.startTime.getTime() + post.duration * 60 * 1000).toLocaleTimeString('th-TH', {
+                      hour: '2-digit',
+                      minute: '2-digit',
+                      timeZone: 'Asia/Bangkok',
+                    })}
+                    {' '}<span className="text-gray-400">({post.duration >= 60 ? `${post.duration / 60} ชม.` : `${post.duration} นาที`})</span>
+                  </p>
+                  <p className="text-red-500 font-semibold mt-1">
                     🔥 ตกคนละ: ฿{pricePerPerson.toFixed(2)}
                   </p>
                 </div>

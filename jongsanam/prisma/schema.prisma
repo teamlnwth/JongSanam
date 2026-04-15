@@ -17,6 +17,7 @@ model Profile {
   
   posts        Post[]
   bookings     Booking[]
+  comments     Comment[]
 }
 
 enum SportType {
@@ -41,6 +42,7 @@ model Post {
   host           Profile   @relation(fields: [hostId], references: [id])
   
   bookings       Booking[]
+  comments       Comment[]
   createdAt      DateTime  @default(now())
 }
 
@@ -55,4 +57,16 @@ model Booking {
   joinedAt  DateTime @default(now())
 
   @@unique([postId, userId]) 
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  content   String
+  createdAt DateTime @default(now())
+  
+  postId    String
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  
+  userId    String
+  user      Profile  @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

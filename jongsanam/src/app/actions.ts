@@ -187,3 +187,34 @@ export async function cancelPost(postId: string) {
   revalidatePath('/profile')
   redirect('/profile')
 }
+
+export async function addComment(postId: string, formData: FormData) {
+  const user = await getUser()
+  const content = formData.get('content') as string
+  if (!content || !content.trim()) return
+
+  // Verify access: user must be host or participant
+  const post = await prisma.post.findUnique({
+    where: { id: postId },
+    include: { bookings: true }
+  })
+
+  if (!post) throw new Error('Post not found')
+
+  const isHost = post.hostId === user.id
+  const isJoined = post.bookings.some((b: { userId: string }) => b.userId === user.id)
+
+  if (!isHost && !isJoined && user.role !== 'ADMIN') {
+    throw new Error('คุณไม่มีสิทธิ์คอมเมนต์ในห้องนี้')
+  }
+
+  await prisma.comment.create({
+    data: {
+      content: content.trim(),
+      postId,
+      userId: user.id,
+    }
+  })
+
+  revalidatePath(`/posts/${postId}`)
+}

@@ -1,7 +1,7 @@
 import prisma from '@/lib/prisma'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import { joinMatch, cancelPost, kickParticipant } from '@/app/actions'
+import { joinMatch, cancelPost, kickParticipant, addComment } from '@/app/actions'
 import { createClient } from '@/lib/supabase/server'
 
 export default async function PostDetailPage({
@@ -22,6 +22,10 @@ export default async function PostDetailPage({
         include: { user: true },
         orderBy: { joinedAt: 'asc' },
       },
+      comments: {
+        include: { user: true },
+        orderBy: { createdAt: 'asc' },
+      }
     },
   })
 
@@ -246,6 +250,61 @@ export default async function PostDetailPage({
           )}
         </div>
 
+        {/* Room Chat Section (Visible only to Joined & Host) */}
+        {(isHost || isJoined) && (
+          <div className="bg-white rounded-[2rem] shadow-[0_4px_20px_rgb(0,0,0,0.04)] border border-slate-100 overflow-hidden flex flex-col mt-6 h-[500px]">
+            <div className="p-6 border-b border-slate-100 bg-slate-50/50 flex justify-between items-center shrink-0">
+              <h2 className="text-xl font-extrabold text-slate-800 flex items-center gap-2">
+                💬 พูดคุยกับสมาชิกในตี้
+              </h2>
+              <span className="text-xs font-bold text-slate-500 bg-slate-200/50 px-3 py-1 rounded-full">Private Chat</span>
+            </div>
+            
+            <div className="flex-1 overflow-y-auto p-6 space-y-4 bg-slate-50/30">
+              {post.comments.length === 0 ? (
+                <div className="h-full flex flex-col items-center justify-center text-center opacity-50 space-y-3">
+                  <span className="text-5xl">👋</span>
+                  <p className="text-slate-500 font-bold">ยังไม่มีข้อความ ทักทายเพื่อนๆ สิ!</p>
+                </div>
+              ) : (
+                post.comments.map((comment: typeof post.comments[0]) => {
+                  const isMine = comment.userId === user?.id
+                  return (
+                    <div key={comment.id} className={`flex flex-col ${isMine ? 'items-end' : 'items-start'} gap-1 max-w-[85%] ${isMine ? 'ml-auto' : 'mr-auto'}`}>
+                      <div className="flex items-center gap-2 px-1">
+                        {!isMine && <span className="text-[10px] font-bold text-slate-400">{comment.user?.name || 'ไม่ระบุชื่อ'}</span>}
+                        {comment.userId === post.hostId && (
+                          <span className="text-[9px] bg-gradient-to-r from-amber-200 to-yellow-400 text-yellow-900 px-1.5 py-0.5 rounded-md font-black tracking-wide shadow-sm">HOST</span>
+                        )}
+                        {isMine && <span className="text-[10px] font-bold text-slate-400">ฉัน</span>}
+                        <span className="text-[9px] text-slate-300 font-medium">{comment.createdAt.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Bangkok' })}</span>
+                      </div>
+                      <div className={`px-4 py-2.5 rounded-[1.25rem] text-sm font-medium shadow-sm leading-relaxed ${isMine ? 'bg-gradient-to-br from-blue-600 to-indigo-600 text-white rounded-tr-sm' : 'bg-white border border-slate-100 text-slate-700 rounded-tl-sm'}`}>
+                        {comment.content}
+                      </div>
+                    </div>
+                  )
+                })
+              )}
+            </div>
+
+            <div className="p-4 bg-white border-t border-slate-100 shrink-0">
+              <form action={addComment.bind(null, post.id)} className="flex items-center gap-2">
+                <input
+                  type="text"
+                  name="content"
+                  required
+                  placeholder="พิมพ์ข้อความ..."
+                  autoComplete="off"
+                  className="flex-1 bg-slate-50 border border-slate-200 rounded-full px-5 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all placeholder:text-slate-400"
+                />
+                <button type="submit" className="w-11 h-11 shrink-0 bg-blue-600 hover:bg-blue-500 text-white rounded-full flex items-center justify-center transition-all shadow-md active:scale-95 group">
+                  <span className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform font-bold text-lg">🚀</span>
+                </button>
+              </form>
+            </div>
+          </div>
+        )}
       </div>
     </main>
   )

@@ -20,7 +20,7 @@ export default async function AdminDashboardPage() {
     orderBy: { email: 'asc' },
   })
 
-  // Basic stats
+
   const totalUsers = allUsers.length
   const totalPosts = allUsers.reduce((sum: number, u: typeof allUsers[0]) => sum + u._count.posts, 0)
   const totalBanned = allUsers.filter((u: typeof allUsers[0]) => u.isBanned).length
@@ -130,8 +130,8 @@ export default async function AdminDashboardPage() {
                           <button
                             type="submit"
                             className={`px-4 py-2 rounded-xl font-bold text-xs transition-all shadow-sm active:scale-95 ${u.isBanned
-                                ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white hover:shadow-md hover:shadow-emerald-500/20'
-                                : 'bg-white border border-red-200 text-red-600 hover:bg-red-50 hover:border-red-300'
+                              ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white hover:shadow-md hover:shadow-emerald-500/20'
+                              : 'bg-white border border-red-200 text-red-600 hover:bg-red-50 hover:border-red-300'
                               }`}
                           >
                             {u.isBanned ? 'ปลดแบนบัญชี' : 'ระงับบัญชี'}

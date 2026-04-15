@@ -22,8 +22,8 @@ export default async function AdminDashboardPage() {
 
   // Basic stats
   const totalUsers = allUsers.length
-  const totalPosts = allUsers.reduce((sum, u) => sum + u._count.posts, 0)
-  const totalBanned = allUsers.filter((u) => u.isBanned).length
+  const totalPosts = allUsers.reduce((sum: number, u: typeof allUsers[0]) => sum + u._count.posts, 0)
+  const totalBanned = allUsers.filter((u: typeof allUsers[0]) => u.isBanned).length
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50/30 p-6 md:p-12 text-slate-800">
@@ -94,7 +94,7 @@ export default async function AdminDashboardPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-50">
-                {allUsers.map((u) => (
+                {allUsers.map((u: typeof allUsers[0]) => (
                   <tr key={u.id} className="hover:bg-blue-50/30 transition-colors group">
                     <td className="p-5 pl-8">
                       <div className="flex items-center gap-3">

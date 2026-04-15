@@ -138,7 +138,7 @@ export default async function ProfilePage() {
                 </div>
               ) : (
                 <div className="grid gap-4">
-                  {profile.bookings.map((booking) => (
+                  {profile.bookings.map((booking: typeof profile.bookings[0]) => (
                     <Link key={booking.id} href={`/posts/${booking.post.id}`} className="block">
                       <div className="border border-slate-100 rounded-2xl p-5 transition-all duration-300 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white hover:bg-slate-50 hover:shadow-md hover:border-blue-200 group relative overflow-hidden">
                         
@@ -187,7 +187,7 @@ export default async function ProfilePage() {
                 </div>
               ) : (
                 <div className="grid gap-4">
-                  {profile.posts.map((post) => (
+                  {profile.posts.map((post: typeof profile.posts[0]) => (
                     <Link key={post.id} href={`/posts/${post.id}`} className="block">
                       <div className="border border-slate-100 rounded-2xl p-5 transition-all duration-300 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white hover:bg-indigo-50/50 hover:shadow-md hover:border-indigo-200 group relative overflow-hidden">
                         

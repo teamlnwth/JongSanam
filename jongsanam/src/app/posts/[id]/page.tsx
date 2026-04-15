@@ -35,7 +35,7 @@ export default async function PostDetailPage({
   }
   
   const isHost = user?.id === post.hostId || profile?.role === 'ADMIN'
-  const isJoined = post.bookings.some(b => b.userId === user?.id)
+  const isJoined = post.bookings.some((b: { userId: string }) => b.userId === user?.id)
   const isCancelled = post.status === 'CANCELLED'
 
   const pricePerPerson = Number(post.totalPrice) / post.maxPlayers
@@ -211,7 +211,7 @@ export default async function PostDetailPage({
             </div>
           ) : (
             <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {post.bookings.map((booking, index) => (
+              {post.bookings.map((booking: typeof post.bookings[0], index: number) => (
                 <li
                   key={booking.id}
                   className="flex items-center gap-4 p-4 bg-slate-50 rounded-2xl hover:bg-slate-100 transition-colors border border-slate-100"

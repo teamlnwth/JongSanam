@@ -23,6 +23,7 @@ export default async function ProfilePage() {
         include: { post: true },
         orderBy: { joinedAt: 'desc' },
       },
+      reviewsReceived: true,
     },
   })
 

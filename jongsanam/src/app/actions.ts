@@ -2,25 +2,29 @@
 
 import prisma from '@/lib/prisma'
 import { revalidatePath } from 'next/cache'
+import { redirect } from 'next/navigation'
+import { createClient } from '@/lib/supabase/server'
 
-const MOCK_USER_ID = "user-test-001"
-
-async function ensureMockUser() {
-  await prisma.profile.upsert({
-    where: { email: 'test@example.com' },
-    update: {},
-    create: {
-      id: MOCK_USER_ID,
-      email: 'test@example.com',
-      name: 'Kantaphong',
-      promptpayQR: 'https://promptpay.io/0812345678'
-    }
-  })
+async function getUser() {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) redirect('/login')
+  return user
 }
 
 export async function createBookingPost(formData: FormData) {
-  await ensureMockUser()
-  
+  const user = await getUser()
+
+  // ตรวจสอบว่ามี Profile ใน Prisma แล้ว (กรณียังไม่มีให้สร้าง)
+  await prisma.profile.upsert({
+    where: { email: user.email! },
+    update: {},
+    create: {
+      id: user.id,
+      email: user.email!,
+    },
+  })
+
   await prisma.post.create({
     data: {
       fieldName: formData.get('fieldName') as string,
@@ -28,26 +32,26 @@ export async function createBookingPost(formData: FormData) {
       totalPrice: Number(formData.get('totalPrice')),
       maxPlayers: Number(formData.get('maxPlayers')),
       duration: 120,
-      startTime: new Date(), 
-      hostId: MOCK_USER_ID,
-    }
+      startTime: new Date(),
+      hostId: user.id,
+    },
   })
-  
-  revalidatePath('/') 
+
+  revalidatePath('/')
 }
 
 export async function joinMatch(postId: string) {
-  await ensureMockUser()
-  
+  const user = await getUser()
+
   try {
     await prisma.booking.create({
       data: {
         postId: postId,
-        userId: MOCK_USER_ID,
-      }
+        userId: user.id,
+      },
     })
     revalidatePath('/')
-  } catch (error) {
-    console.log("คุณอาจจะกดเข้าร่วมไปแล้ว หรือเกิดข้อผิดพลาด")
+  } catch {
+    console.log('คุณอาจจะกดเข้าร่วมไปแล้ว หรือเกิดข้อผิดพลาด')
   }
 }

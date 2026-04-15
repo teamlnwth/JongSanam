@@ -18,17 +18,20 @@ export async function signUp(formData: FormData) {
     redirect(`/register?error=${encodeURIComponent(error.message)}`)
   }
 
-  if (data.user) {
-    await prisma.profile.upsert({
-      where: { email },
-      update: { name },
-      create: {
-        id: data.user.id,
-        email,
-        name,
-      },
-    })
+  // When email is already registered, Supabase returns a user with empty identities array
+  if (!data.user || (data.user.identities && data.user.identities.length === 0)) {
+    redirect(`/register?error=${encodeURIComponent('อีเมลนี้มีผู้ใช้งานแล้ว กรุณาใช้อีเมลอื่น หรือเข้าสู่ระบบด้วยอีเมลนี้')}`)
   }
+
+  await prisma.profile.upsert({
+    where: { email },
+    update: { name },
+    create: {
+      id: data.user.id,
+      email,
+      name,
+    },
+  })
 
   revalidatePath('/', 'layout')
   redirect('/')

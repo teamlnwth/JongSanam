@@ -42,9 +42,9 @@ export default async function RootLayout({
               JongSanam ⚽
             </Link>
             <div className="flex items-center gap-4">
-              <span className="text-blue-200 text-sm hidden sm:block">
+              <Link href="/profile" className="text-blue-200 text-sm hidden sm:block hover:text-white hover:underline">
                 {user.email}
-              </span>
+              </Link>
               <form action={signOut}>
                 <button
                   type="submit"

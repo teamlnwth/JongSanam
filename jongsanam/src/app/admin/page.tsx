@@ -28,7 +28,7 @@ export default async function AdminDashboardPage() {
   return (
     <main className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50/30 p-6 md:p-12 text-slate-800">
       <div className="max-w-6xl mx-auto space-y-10">
-        
+
         {/* Header Section */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div>
@@ -129,11 +129,10 @@ export default async function AdminDashboardPage() {
                         ) : (
                           <button
                             type="submit"
-                            className={`px-4 py-2 rounded-xl font-bold text-xs transition-all shadow-sm active:scale-95 ${
-                              u.isBanned
+                            className={`px-4 py-2 rounded-xl font-bold text-xs transition-all shadow-sm active:scale-95 ${u.isBanned
                                 ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white hover:shadow-md hover:shadow-emerald-500/20'
                                 : 'bg-white border border-red-200 text-red-600 hover:bg-red-50 hover:border-red-300'
-                            }`}
+                              }`}
                           >
                             {u.isBanned ? 'ปลดแบนบัญชี' : 'ระงับบัญชี'}
                           </button>

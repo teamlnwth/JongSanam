@@ -4,6 +4,7 @@ import "./globals.css";
 import { createClient } from "@/lib/supabase/server";
 import { signOut } from "@/app/auth/actions";
 import Link from "next/link";
+import { NotificationBell } from "@/components/NotificationBell";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -47,6 +48,7 @@ export default async function RootLayout({
               </span>
             </Link>
             <div className="flex items-center gap-2 sm:gap-3">
+              <NotificationBell />
               {user.email === 'pakawatpromhom@gmail.com' && (
                 <Link href="/admin" className="flex items-center gap-1.5 text-indigo-600 bg-indigo-50 hover:bg-indigo-100 font-bold text-xs px-3 py-1.5 rounded-full transition-colors border border-indigo-100">
                   <span>👑</span> <span className="hidden sm:inline">จัดการระบบ</span>

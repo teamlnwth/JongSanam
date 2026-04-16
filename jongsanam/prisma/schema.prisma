@@ -21,6 +21,7 @@ model Profile {
   
   reviewsGiven    Review[]  @relation("ReviewsGiven")
   reviewsReceived Review[]  @relation("ReviewsReceived")
+  notifications   Notification[]
 }
 
 enum SportType {
@@ -91,4 +92,16 @@ model Review {
   post       Post?    @relation(fields: [postId], references: [id], onDelete: SetNull)
   
   @@unique([reviewerId, revieweeId, postId]) 
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String   
+  type      String   
+  message   String
+  read      Boolean  @default(false)
+  link      String?  
+  createdAt DateTime @default(now())
+
+  user      Profile  @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

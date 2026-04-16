@@ -106,6 +106,14 @@ export async function kickParticipant(postId: string, bookingId: string) {
     where: { id: bookingId },
   })
 
+  await prisma.notification.create({
+    data: {
+      userId: booking.userId,
+      type: 'KICKED',
+      message: `คุณถูกลบออกจากสนาม "${post.fieldName}" โดยโฮสต์`,
+    }
+  })
+
   revalidatePath(`/posts/${postId}`)
   redirect(`/posts/${postId}`)
 }
@@ -158,6 +166,18 @@ export async function joinMatch(postId: string, formData?: FormData) {
         userId: user.id,
       },
     })
+
+    if (post.hostId !== user.id) {
+      await prisma.notification.create({
+        data: {
+          userId: post.hostId,
+          type: 'NEW_JOIN',
+          message: `${user.name || 'มีคน'} ได้เข้าร่วมสนาม "${post.fieldName}" ของคุณ`,
+          link: `/posts/${postId}`
+        }
+      })
+    }
+
     revalidatePath('/')
   } catch (error) {
     console.error('คุณอาจจะกดเข้าร่วมไปแล้ว หรือเกิดข้อผิดพลาด:', error)
@@ -172,7 +192,10 @@ export async function joinMatch(postId: string, formData?: FormData) {
 export async function cancelPost(postId: string) {
   const user = await getUser()
 
-  const post = await prisma.post.findUnique({ where: { id: postId } })
+  const post = await prisma.post.findUnique({ 
+    where: { id: postId },
+    include: { bookings: true } 
+  })
   if (!post || (post.hostId !== user.id && user.role !== 'ADMIN')) {
     redirect(`/posts/${postId}?error=${encodeURIComponent('คุณไม่มีสิทธิ์ยกเลิกโพสต์นี้')}`)
   }
@@ -181,6 +204,17 @@ export async function cancelPost(postId: string) {
     where: { id: postId },
     data: { status: 'CANCELLED' },
   })
+
+  const notifications = post.bookings
+    .filter((b: { userId: string }) => b.userId !== post.hostId)
+    .map((b: { userId: string }) => prisma.notification.create({
+      data: {
+        userId: b.userId,
+        type: 'POST_CANCEL',
+        message: `สนาม "${post.fieldName}" ที่คุณเตรียมไปแจม ถูกยกเลิกเสียแล้ว`,
+      }
+    }))
+  await Promise.all(notifications)
 
   revalidatePath('/')
   revalidatePath(`/posts/${postId}`)
@@ -261,5 +295,35 @@ export async function submitReview(formData: FormData) {
   })
 
   revalidatePath(`/posts/${postId}`)
+  revalidatePath(`/posts/${postId}`)
   revalidatePath('/profile')
+}
+
+export async function markNotificationAsRead(notificationId: string) {
+  const user = await getUser()
+  const notification = await prisma.notification.findUnique({ where: { id: notificationId } })
+  if (!notification || notification.userId !== user.id) return
+  
+  await prisma.notification.update({
+    where: { id: notificationId },
+    data: { read: true }
+  })
+}
+
+export async function markAllNotificationsAsRead() {
+  const user = await getUser()
+  await prisma.notification.updateMany({
+    where: { userId: user.id, read: false },
+    data: { read: true }
+  })
+}
+
+export async function getNotifications() {
+  const user = await getUser()
+  const notifications = await prisma.notification.findMany({
+    where: { userId: user.id },
+    orderBy: { createdAt: 'desc' },
+    take: 20
+  })
+  return notifications
 }

@@ -227,8 +227,8 @@ export default async function Home({
                             <button
                               disabled={isFull}
                               className={`w-full text-xs font-bold py-2 rounded-lg transition-all ${isFull
-                                  ? 'bg-slate-800 text-slate-500 cursor-not-allowed border border-white/5'
-                                  : 'bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 border border-emerald-500/30'
+                                ? 'bg-slate-800 text-slate-500 cursor-not-allowed border border-white/5'
+                                : 'bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 border border-emerald-500/30'
                                 }`}
                             >
                               {isFull ? 'เต็มแล้ว' : 'จอยเลย!'}
@@ -315,12 +315,12 @@ export default async function Home({
 
         {/* 3. Trust Badges (และอื่นๆ) */}
         <section className="py-12 border-y border-white/10 overflow-hidden">
-          <p className="text-center text-sm font-medium text-slate-500 tracking-widest uppercase mb-8">สนามและพาร์ทเนอร์กว่า 500 แห่งที่ใช้ระบบของเรา</p>
+          <p className="text-center text-sm font-medium text-slate-500 tracking-widest uppercase mb-8">ดอใหย่</p>
           <div className="flex flex-wrap justify-center gap-12 md:gap-24 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
-            <div className="flex items-center gap-2 font-bold text-xl"><ShieldIcon /> FieldMaster</div>
-            <div className="flex items-center gap-2 font-bold text-xl"><UsersIcon /> ThaiSports Net</div>
-            <div className="flex items-center gap-2 font-bold text-xl"><ZapIcon /> ArenaSync</div>
-            <div className="flex items-center gap-2 font-bold text-xl"><ActivityIcon /> MatchPro</div>
+            <div className="flex items-center gap-2 font-bold text-xl"><ShieldIcon /> 49</div>
+            <div className="flex items-center gap-2 font-bold text-xl"><UsersIcon /> 52</div>
+            <div className="flex items-center gap-2 font-bold text-xl"><ZapIcon /> 56</div>
+            <div className="flex items-center gap-2 font-bold text-xl"><ActivityIcon /> 57</div>
           </div>
         </section>
 

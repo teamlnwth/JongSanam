@@ -1,17 +1,46 @@
+"use client"
+
 import { signUp } from '@/app/auth/actions'
 import Link from 'next/link'
 import { SubmitButton } from '@/components/SubmitButton'
+import { useState, use } from 'react'
 
-export default async function RegisterPage({
+export default function RegisterPage({
   searchParams,
 }: {
   searchParams: Promise<{ error?: string }>
 }) {
-  const { error } = await searchParams
+  // ใช้ React.use() เพื่อแกะค่า Promise ใน Client Component
+  const { error } = use(searchParams)
+
+  // State สำหรับเก็บค่ารหัสผ่าน
+  const [password, setPassword] = useState("")
+
+  // ฟังก์ชันคำนวณความปลอดภัยของรหัสผ่าน
+  const calculateStrength = (pass: string) => {
+    let score = 0;
+    if (!pass) return score;
+    if (pass.length >= 8) score += 1; // ความยาว 8 ตัวขึ้นไป
+    if (/[A-Z]/.test(pass)) score += 1; // มีตัวพิมพ์ใหญ่
+    if (/[0-9]/.test(pass)) score += 1; // มีตัวเลข
+    if (/[\W_]/.test(pass)) score += 1; // มีอักขระพิเศษ
+    return score;
+  };
+
+  const strength = calculateStrength(password);
+
+  const getStrengthIndicator = () => {
+    if (strength <= 1) return { bg: "bg-red-500", text: "text-red-400", label: "อ่อนแอมาก" };
+    if (strength === 2) return { bg: "bg-amber-500", text: "text-amber-400", label: "พอใช้" };
+    if (strength === 3) return { bg: "bg-blue-500", text: "text-blue-400", label: "ดี" };
+    return { bg: "bg-emerald-500", text: "text-emerald-400", label: "ปลอดภัยมาก" };
+  };
+
+  const indicator = getStrengthIndicator();
 
   return (
     <main className="min-h-screen bg-[#0B0F19] text-slate-100 font-sans selection:bg-blue-500/30 overflow-hidden relative flex items-center justify-center p-6">
-      {/* Abstract Glowing Backgrounds (ดึงมาจากหน้าอื่นๆ) */}
+      {/* Abstract Glowing Backgrounds */}
       <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-blue-600/20 blur-[120px] pointer-events-none" />
       <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-purple-600/20 blur-[120px] pointer-events-none" />
 
@@ -69,6 +98,7 @@ export default async function RegisterPage({
               />
             </div>
 
+            {/* ช่องกรอกรหัสผ่านพร้อมหลอดแสดงความปลอดภัย */}
             <div>
               <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5 ml-1">
                 รหัสผ่าน
@@ -77,10 +107,35 @@ export default async function RegisterPage({
                 name="password"
                 type="password"
                 required
-                placeholder="อย่างน้อย 6 ตัวอักษร"
+                placeholder="อย่างน้อย 8 ตัวอักษร"
                 minLength={6}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 className="w-full bg-black/30 border border-white/10 p-3 rounded-xl focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 outline-none transition-all placeholder:text-slate-600 text-sm text-white"
               />
+
+              {/* แถบแสดงระดับความปลอดภัย (จะโผล่มาตอนเริ่มพิมพ์) */}
+              {password.length > 0 && (
+                <div className="mt-3">
+                  <div className="flex gap-1 h-1.5 mb-2">
+                    {[...Array(4)].map((_, index) => (
+                      <div
+                        key={index}
+                        className={`h-full flex-1 rounded-full transition-all duration-300 ${index < strength ? indicator.bg : "bg-white/10"
+                          }`}
+                      />
+                    ))}
+                  </div>
+                  <div className="flex justify-between items-center px-1">
+                    <p className="text-[10px] text-slate-500 font-medium">
+                      แนะนำ: ตัวพิมพ์ใหญ่, ตัวเลข, สัญลักษณ์
+                    </p>
+                    <p className={`text-[10px] font-bold tracking-wide ${indicator.text}`}>
+                      {indicator.label}
+                    </p>
+                  </div>
+                </div>
+              )}
             </div>
 
             <div className="pt-2">

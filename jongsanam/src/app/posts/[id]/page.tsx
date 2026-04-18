@@ -39,7 +39,7 @@ export default async function PostDetailPage({
   if (user) {
     profile = await prisma.profile.findUnique({ where: { id: user.id } })
   }
-  
+
   const isHost = user?.id === post.hostId || profile?.role === 'ADMIN'
   const isJoined = post.bookings.some((b: { userId: string }) => b.userId === user?.id)
   const isCancelled = post.status === 'CANCELLED'
@@ -190,11 +190,10 @@ export default async function PostDetailPage({
                   <SubmitButton
                     isFullWidth
                     disabled={isFull}
-                    className={`py-4 rounded-2xl font-black text-white text-lg shadow-lg ${
-                      isFull 
-                        ? 'bg-slate-300 text-slate-500 cursor-not-allowed shadow-none' 
+                    className={`py-4 rounded-2xl font-black text-white text-lg shadow-lg ${isFull
+                        ? 'bg-slate-300 text-slate-500 cursor-not-allowed shadow-none'
                         : 'bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 shadow-emerald-500/30 hover:shadow-emerald-500/40 hover:-translate-y-0.5'
-                    }`}
+                      }`}
                   >
                     {isFull ? '🚫 ที่เต็มแล้ว' : '✅ ยืนยันเข้าร่วมกดจองเลย!'}
                   </SubmitButton>
@@ -255,12 +254,12 @@ export default async function PostDetailPage({
                         <input type="hidden" name="revieweeId" value={booking.userId} />
                         <input type="hidden" name="postId" value={post.id} />
                         <select name="rating" required defaultValue="" className="text-xs shrink-0 rounded-lg px-2 py-1.5 border border-slate-300 font-bold focus:ring-2 focus:ring-amber-400 focus:outline-none bg-amber-50/30 text-amber-900 cursor-pointer">
-                           <option value="" disabled>ให้ดาว</option>
-                           <option value="5">5 ⭐ ดีเยี่ยม</option>
-                           <option value="4">4 ⭐ ดี</option>
-                           <option value="3">3 ⭐ ปานกลาง</option>
-                           <option value="2">2 ⭐ แย่</option>
-                           <option value="1">1 ⭐ แย่มาก</option>
+                          <option value="" disabled>ให้ดาว</option>
+                          <option value="5">5 ⭐ ดีเยี่ยม</option>
+                          <option value="4">4 ⭐ ดี</option>
+                          <option value="3">3 ⭐ ปานกลาง</option>
+                          <option value="2">2 ⭐ แย่</option>
+                          <option value="1">1 ⭐ แย่มาก</option>
                         </select>
                         <input type="text" name="comment" placeholder="รีวิวสั้นๆ (ตัวเลือก)" autoComplete="off" className="text-xs px-3 py-1.5 min-w-[100px] w-full rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-400 focus:outline-none placeholder:text-slate-400 font-medium bg-slate-50" />
                         <SubmitButton pendingText="ส่ง.." className="text-[10px] bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-700 hover:to-indigo-700 px-3 py-1.5 rounded-lg transition-all font-bold tracking-wide shadow-sm shrink-0">
@@ -284,7 +283,7 @@ export default async function PostDetailPage({
               </h2>
               <span className="text-xs font-bold text-slate-500 bg-slate-200/50 px-3 py-1 rounded-full">Private Chat</span>
             </div>
-            
+
             <div className="flex-1 overflow-y-auto p-6 space-y-4 bg-slate-50/30">
               {post.comments.length === 0 ? (
                 <div className="h-full flex flex-col items-center justify-center text-center opacity-50 space-y-3">

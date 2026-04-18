@@ -43,211 +43,19 @@ export default async function Home({
       <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-purple-600/20 blur-[120px] pointer-events-none" />
       <div className="absolute top-[40%] left-[60%] w-[30%] h-[30%] rounded-full bg-emerald-600/10 blur-[120px] pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-6 pt-32 pb-20 relative z-10">
-        {/* Header Hero Section */}
-        <section className="grid lg:grid-cols-2 gap-12 items-center min-h-[70vh]">
-          <div className="space-y-8">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-sm font-medium text-blue-400">
-              <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
-              ระบบวิเคราะห์ข้อมูล v2.0 พร้อมใช้งานแล้ว
-            </div>
-            <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight leading-[1.1]">
-              ระบบจับคู่กีฬา <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400">
-                ขับเคลื่อนด้วยข้อมูล
-              </span>
-            </h1>
-            <p className="text-lg md:text-xl text-slate-400 font-light max-w-lg leading-relaxed">
-              จองสนาม (JongSanam) เปลี่ยนวิธีที่คุณใช้หาผู้เล่น หารค่าสนาม และจองพื้นที่เตะ ขับเคลื่อนด้วยระบบวิเคราะห์ข้อมูลแบบเรียลไทม์และการจัดการทีมที่ไร้รอยต่อ
-            </p>
-            <div className="flex flex-wrap items-center gap-4">
-              <a href="#dashboard" className="bg-blue-600 hover:bg-blue-500 text-white px-8 py-4 rounded-xl font-bold transition-all shadow-[0_0_20px_rgba(37,99,235,0.3)] hover:shadow-[0_0_30px_rgba(37,99,235,0.5)]">
-                เริ่มต้นใช้งานแดชบอร์ด
-              </a>
-              <a href="#features" className="px-8 py-4 rounded-xl font-bold text-slate-300 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 transition-all flex items-center gap-2">
-                <ActivityIcon /> ดูสถิติแบบเรียลไทม์
-              </a>
-            </div>
-          </div>
+      <div className="max-w-7xl mx-auto px-6 pt-20 pb-20 relative z-10">
 
-          {/* Real-time Data Visualization (Mock Dashboard) */}
-          <div className="relative">
-            <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/10 to-purple-500/10 rounded-2xl transform rotate-3 scale-105 blur-lg"></div>
-            <div className="bg-[#111827]/80 backdrop-blur-xl border border-white/10 rounded-2xl p-6 shadow-2xl relative">
-              <div className="flex items-center justify-between mb-6 border-b border-white/10 pb-4">
-                <div className="flex items-center gap-3">
-                  <BarChartIcon />
-                  <span className="font-semibold text-sm">ความเคลื่อนไหวบนแพลตฟอร์ม</span>
-                </div>
-                <div className="flex bg-white/5 p-1 rounded-lg">
-                  <span className="text-xs px-2 py-1 bg-white/10 rounded text-slate-200">1 ชม.</span>
-                  <span className="text-xs px-2 py-1 text-slate-400">24 ชม.</span>
-                  <span className="text-xs px-2 py-1 text-slate-400">7 วัน</span>
-                </div>
-              </div>
-              <div className="space-y-6">
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-white/5 border border-white/5 rounded-xl p-4">
-                    <p className="text-slate-400 text-xs mb-1">แมตช์ที่กำลังเปิดรับ</p>
-                    <p className="text-2xl font-bold text-blue-400">{posts.length > 0 ? posts.length + 12 : 12}</p>
-                    <div className="mt-2 h-1 w-full bg-white/10 rounded-full overflow-hidden">
-                      <div className="h-full bg-blue-500 w-[60%] rounded-full"></div>
-                    </div>
-                  </div>
-                  <div className="bg-white/5 border border-white/5 rounded-xl p-4">
-                    <p className="text-slate-400 text-xs mb-1">ผู้เล่นที่กำลังหาทีม</p>
-                    <p className="text-2xl font-bold text-emerald-400">348</p>
-                    <div className="mt-2 h-1 w-full bg-white/10 rounded-full overflow-hidden">
-                      <div className="h-full bg-emerald-500 w-[85%] rounded-full"></div>
-                    </div>
-                  </div>
-                </div>
-                <div>
-                  <p className="text-slate-400 text-xs mb-2">อัตราการจับคู่</p>
-                  <div className="h-24 flex items-end gap-2">
-                    {[40, 70, 45, 90, 65, 85, 100, 60, 80].map((h, i) => (
-                      <div key={i} className="flex-1 bg-blue-500/20 hover:bg-blue-500/40 rounded-t-sm relative group transition-all" style={{ height: `${h}%` }}>
-                        <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 bg-slate-800 text-[10px] px-2 py-1 rounded transition-opacity">
-                          {h * 12}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Trust Badges */}
-        <section className="py-12 border-y border-white/5 mt-12 overflow-hidden">
-          <p className="text-center text-sm font-medium text-slate-500 tracking-widest uppercase mb-8">ได้รับความไว้วางใจจากสนามและเครือข่ายกีฬาท้องถิ่นกว่า 500 แห่ง</p>
-          <div className="flex flex-wrap justify-center gap-12 md:gap-24 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
-            <div className="flex items-center gap-2 font-bold text-xl"><ShieldIcon /> FieldMaster</div>
-            <div className="flex items-center gap-2 font-bold text-xl"><UsersIcon /> ThaiSports Net</div>
-            <div className="flex items-center gap-2 font-bold text-xl"><ZapIcon /> ArenaSync</div>
-            <div className="flex items-center gap-2 font-bold text-xl"><ActivityIcon /> MatchPro</div>
-          </div>
-        </section>
-
-        {/* Feature Highlights */}
-        <section id="features" className="py-24">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold mb-4">สร้างมาเพื่อ <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">ประสิทธิภาพสูงสุด</span></h2>
-            <p className="text-slate-400 max-w-2xl mx-auto">ทุกสิ่งที่คุณต้องการในการจัดทีม เข้าร่วม และจัดการแมตช์ฟุตบอล พร้อมความเสถียรและระบบวิเคราะห์ข้อมูลระดับองค์กร</p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="bg-white/5 border border-white/10 p-8 rounded-3xl hover:bg-white/10 transition-colors group">
-              <div className="w-12 h-12 bg-blue-500/20 rounded-2xl flex items-center justify-center text-blue-400 mb-6 group-hover:scale-110 transition-transform">
-                <ZapIcon />
-              </div>
-              <h3 className="text-xl font-bold mb-3">จับคู่แบบเรียลไทม์</h3>
-              <p className="text-slate-400 text-sm leading-relaxed">อัลกอริทึมของเราช่วยจับคู่ผู้เล่นกับสนามได้ทันที ไม่ต้องรอหรือจัดการกลุ่มไลน์ให้วุ่นวายอีกต่อไป</p>
-            </div>
-            <div className="bg-white/5 border border-white/10 p-8 rounded-3xl hover:bg-white/10 transition-colors group relative overflow-hidden">
-              <div className="absolute top-0 right-0 p-4 opacity-10 blur-[2px] group-hover:opacity-20 transition-opacity">
-                <BarChartIcon />
-              </div>
-              <div className="w-12 h-12 bg-purple-500/20 rounded-2xl flex items-center justify-center text-purple-400 mb-6 group-hover:scale-110 transition-transform">
-                <ActivityIcon />
-              </div>
-              <h3 className="text-xl font-bold mb-3">ระบบวิเคราะห์ข้อมูลขั้นสูง</h3>
-              <p className="text-slate-400 text-sm leading-relaxed">ติดตามอัตราการเข้าร่วม เวลาที่เหมาะสมที่สุดในการเล่น และสรุปการหารค่าใช้จ่ายทั้งหมดจากแมตช์ที่คุณเคยจัด</p>
-            </div>
-            <div className="bg-white/5 border border-white/10 p-8 rounded-3xl hover:bg-white/10 transition-colors group">
-              <div className="w-12 h-12 bg-emerald-500/20 rounded-2xl flex items-center justify-center text-emerald-400 mb-6 group-hover:scale-110 transition-transform">
-                <ShieldIcon />
-              </div>
-              <h3 className="text-xl font-bold mb-3">การเข้าถึงที่ปลอดภัย</h3>
-              <p className="text-slate-400 text-sm leading-relaxed">ความปลอดภัยระดับองค์กรพร้อมระบบป้องกันด้วยรหัสผ่าน รักษาแมตช์ส่วนตัวของคุณให้เป็นส่วนตัวอย่างแท้จริง</p>
-            </div>
-          </div>
-        </section>
-
-        {/* Core App Logic - Dashboard */}
-        <section id="dashboard" className="py-24 relative">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold mb-4">ศูนย์<span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400">ควบคุม</span></h2>
-            <p className="text-slate-400 max-w-2xl mx-auto">สร้างแมตช์ใหม่หรือตรวจสอบแมตช์ที่กำลังดำเนินการอยู่จากแดชบอร์ดส่วนกลางของคุณ</p>
+        {/* 1. Core App Logic - Dashboard & Feed (ย้ายขึ้นมาบนสุด) */}
+        <section id="dashboard" className="pt-8 pb-16 relative">
+          <div className="text-center mb-12">
+            <h1 className="text-4xl md:text-6xl font-extrabold mb-4">ค้นหาและ<span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400">จองสนาม</span></h1>
+            <p className="text-slate-400 max-w-2xl mx-auto text-lg">เข้าร่วมแมตช์ที่กำลังเปิดอยู่ หรือสร้างแมตช์ใหม่ของคุณเองได้ทันทีจากแดชบอร์ดส่วนกลาง</p>
           </div>
 
           <div className="grid lg:grid-cols-12 gap-8">
 
-            {/* Create Post Form */}
-            <div className="lg:col-span-4 flex flex-col">
-              <div className="bg-[#111827]/80 backdrop-blur-xl border border-white/10 rounded-3xl p-6 md:p-8 flex-1 flex flex-col shadow-2xl relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-blue-500/10 to-transparent rounded-bl-full pointer-events-none"></div>
-
-                <div className="mb-8 relative z-10">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse shadow-[0_0_10px_rgba(52,211,153,0.8)]"></span>
-                    <h2 className="text-xl font-bold text-white">สร้างแมตช์ใหม่</h2>
-                  </div>
-                  <p className="text-slate-400 text-sm">ตั้งค่ารายละเอียดสำหรับการเปิดรับสมัครใหม่</p>
-                </div>
-
-                {error && (
-                  <div className="bg-red-500/10 border border-red-500/20 text-red-400 rounded-xl p-4 mb-6 text-sm font-semibold flex items-center gap-3">
-                    <span className="text-lg">⚠️</span> {decodeURIComponent(error)}
-                  </div>
-                )}
-
-                <form action={createBookingPost} className="flex flex-col gap-4 flex-1 relative z-10">
-                  <div>
-                    <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5 ml-1">ชื่อสนาม</label>
-                    <input name="fieldName" placeholder="ระบุชื่อสนาม" required className="w-full bg-black/30 border border-white/10 p-3 rounded-xl focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 outline-none transition-all placeholder:text-slate-600 text-sm" />
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5 ml-1">ประเภทกีฬา</label>
-                      <select name="sportType" className="w-full bg-black/30 border border-white/10 p-3 rounded-xl focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 outline-none transition-all text-sm text-slate-200 appearance-none cursor-pointer">
-                        <option value="FOOTBALL" className="bg-slate-900">ฟุตบอล (11v11)</option>
-                        <option value="FUTSAL" className="bg-slate-900">ฟุตซอล (5v5)</option>
-                      </select>
-                    </div>
-                    <div>
-                      <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5 ml-1">จำนวนรับสมัคร</label>
-                      <input type="number" name="maxPlayers" placeholder="จำนวนคนรับ" required className="w-full bg-black/30 border border-white/10 p-3 rounded-xl focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 outline-none transition-all placeholder:text-slate-600 text-sm" />
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-4 bg-black/20 p-4 rounded-2xl border border-white/5">
-                    <div>
-                      <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5 ml-1">เวลาเริ่มเตะ</label>
-                      <input type="datetime-local" name="startTime" required className="w-full bg-black/30 border border-white/10 p-3 rounded-xl focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 outline-none transition-all text-sm text-slate-200 [color-scheme:dark]" />
-                    </div>
-                    <div>
-                      <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5 ml-1">ระยะเวลา (ชม.)</label>
-                      <input type="number" name="duration" placeholder="เช่น: 2" min="1" max="12" step="0.5" required className="w-full bg-black/30 border border-white/10 p-3 rounded-xl focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 outline-none transition-all text-sm placeholder:text-slate-600" />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5 ml-1">ค่าสนามทั้งหมด (฿)</label>
-                    <input type="number" name="totalPrice" placeholder="งบประมาณรวม" required className="w-full bg-black/30 border border-white/10 p-3 rounded-xl focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 outline-none transition-all placeholder:text-slate-600 text-sm" />
-                  </div>
-
-                  <div className="relative">
-                    <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5 ml-1">การเข้าถึง</label>
-                    <div className="relative">
-                      <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-500"><ShieldIcon /></span>
-                      <input name="passcode" type="password" placeholder="รหัสผ่าน (ไม่บังคับ)" className="w-full bg-black/30 border border-white/10 py-3 pr-3 pl-10 rounded-xl focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 outline-none transition-all placeholder:text-slate-600 text-sm" />
-                    </div>
-                  </div>
-
-                  <div className="mt-auto pt-6">
-                    <SubmitButton isFullWidth className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm py-3.5 rounded-xl transition-all duration-200">
-                      สร้างห้องแมตช์
-                    </SubmitButton>
-                  </div>
-                </form>
-              </div>
-            </div>
-
-            {/* Feed Section */}
-            <div className="lg:col-span-8 flex flex-col">
+            {/* Feed Section (เอาการหาห้องขึ้นมาก่อน - สลับมาอยู่ซ้าย) */}
+            <div className="lg:col-span-8 flex flex-col order-2 lg:order-1">
               <div className="flex items-end justify-between mb-6 px-2">
                 <div>
                   <h3 className="text-xl font-bold flex items-center gap-2"><ActivityIcon /> แมตช์ที่เปิดอยู่</h3>
@@ -361,6 +169,192 @@ export default async function Home({
                   )
                 })}
               </div>
+            </div>
+
+            {/* Create Post Form (สลับมาอยู่ขวา) */}
+            <div className="lg:col-span-4 flex flex-col order-1 lg:order-2">
+              <div className="bg-[#111827]/80 backdrop-blur-xl border border-white/10 rounded-3xl p-6 md:p-8 flex-1 flex flex-col shadow-2xl relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-blue-500/10 to-transparent rounded-bl-full pointer-events-none"></div>
+
+                <div className="mb-8 relative z-10">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse shadow-[0_0_10px_rgba(52,211,153,0.8)]"></span>
+                    <h2 className="text-xl font-bold text-white">สร้างแมตช์ใหม่</h2>
+                  </div>
+                  <p className="text-slate-400 text-sm">ตั้งค่ารายละเอียดสำหรับการเปิดรับสมัครใหม่</p>
+                </div>
+
+                {error && (
+                  <div className="bg-red-500/10 border border-red-500/20 text-red-400 rounded-xl p-4 mb-6 text-sm font-semibold flex items-center gap-3">
+                    <span className="text-lg">⚠️</span> {decodeURIComponent(error)}
+                  </div>
+                )}
+
+                <form action={createBookingPost} className="flex flex-col gap-4 flex-1 relative z-10">
+                  <div>
+                    <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5 ml-1">ชื่อสนาม</label>
+                    <input name="fieldName" placeholder="ระบุชื่อสนาม" required className="w-full bg-black/30 border border-white/10 p-3 rounded-xl focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 outline-none transition-all placeholder:text-slate-600 text-sm" />
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5 ml-1">ประเภทกีฬา</label>
+                      <select name="sportType" className="w-full bg-black/30 border border-white/10 p-3 rounded-xl focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 outline-none transition-all text-sm text-slate-200 appearance-none cursor-pointer">
+                        <option value="FOOTBALL" className="bg-slate-900">ฟุตบอล (11v11)</option>
+                        <option value="FUTSAL" className="bg-slate-900">ฟุตซอล (5v5)</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5 ml-1">จำนวนรับสมัคร</label>
+                      <input type="number" name="maxPlayers" placeholder="จำนวนคนรับ" required className="w-full bg-black/30 border border-white/10 p-3 rounded-xl focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 outline-none transition-all placeholder:text-slate-600 text-sm" />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4 bg-black/20 p-4 rounded-2xl border border-white/5">
+                    <div>
+                      <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5 ml-1">เวลาเริ่มเตะ</label>
+                      <input type="datetime-local" name="startTime" required className="w-full bg-black/30 border border-white/10 p-3 rounded-xl focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 outline-none transition-all text-sm text-slate-200 [color-scheme:dark]" />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5 ml-1">ระยะเวลา (ชม.)</label>
+                      <input type="number" name="duration" placeholder="เช่น: 2" min="1" max="12" step="0.5" required className="w-full bg-black/30 border border-white/10 p-3 rounded-xl focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 outline-none transition-all text-sm placeholder:text-slate-600" />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5 ml-1">ค่าสนามทั้งหมด (฿)</label>
+                    <input type="number" name="totalPrice" placeholder="งบประมาณรวม" required className="w-full bg-black/30 border border-white/10 p-3 rounded-xl focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 outline-none transition-all placeholder:text-slate-600 text-sm" />
+                  </div>
+
+                  <div className="relative">
+                    <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5 ml-1">การเข้าถึง</label>
+                    <div className="relative">
+                      <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-500"><ShieldIcon /></span>
+                      <input name="passcode" type="password" placeholder="รหัสผ่าน (ไม่บังคับ)" className="w-full bg-black/30 border border-white/10 py-3 pr-3 pl-10 rounded-xl focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 outline-none transition-all placeholder:text-slate-600 text-sm" />
+                    </div>
+                  </div>
+
+                  <div className="mt-auto pt-6">
+                    <SubmitButton isFullWidth className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm py-3.5 rounded-xl transition-all duration-200">
+                      สร้างห้องแมตช์
+                    </SubmitButton>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        {/* 2. Platform Info & Statistics (ต่อด้วยสถิติ) */}
+        <section className="grid lg:grid-cols-2 gap-12 items-center py-16 mt-8 border-t border-white/10">
+          <div className="space-y-8">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-sm font-medium text-blue-400">
+              <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
+              ระบบวิเคราะห์ข้อมูล v2.0 พร้อมใช้งานแล้ว
+            </div>
+            <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight leading-[1.1]">
+              แพลตฟอร์มจับคู่กีฬา <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400">
+                ขับเคลื่อนด้วยข้อมูล
+              </span>
+            </h2>
+            <p className="text-lg text-slate-400 font-light max-w-lg leading-relaxed">
+              จองสนาม (JongSanam) เปลี่ยนวิธีที่คุณใช้หาผู้เล่น หารค่าสนาม และจองพื้นที่เตะ ขับเคลื่อนด้วยระบบวิเคราะห์ข้อมูลแบบเรียลไทม์และการจัดการทีมที่ไร้รอยต่อ
+            </p>
+          </div>
+
+          {/* Real-time Data Visualization (Mock Dashboard) */}
+          <div className="relative">
+            <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/10 to-purple-500/10 rounded-2xl transform rotate-3 scale-105 blur-lg"></div>
+            <div className="bg-[#111827]/80 backdrop-blur-xl border border-white/10 rounded-2xl p-6 shadow-2xl relative">
+              <div className="flex items-center justify-between mb-6 border-b border-white/10 pb-4">
+                <div className="flex items-center gap-3">
+                  <BarChartIcon />
+                  <span className="font-semibold text-sm">ความเคลื่อนไหวบนแพลตฟอร์ม</span>
+                </div>
+                <div className="flex bg-white/5 p-1 rounded-lg">
+                  <span className="text-xs px-2 py-1 bg-white/10 rounded text-slate-200">1 ชม.</span>
+                  <span className="text-xs px-2 py-1 text-slate-400">24 ชม.</span>
+                  <span className="text-xs px-2 py-1 text-slate-400">7 วัน</span>
+                </div>
+              </div>
+              <div className="space-y-6">
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="bg-white/5 border border-white/5 rounded-xl p-4">
+                    <p className="text-slate-400 text-xs mb-1">แมตช์ที่กำลังเปิดรับ</p>
+                    <p className="text-2xl font-bold text-blue-400">{posts.length > 0 ? posts.length + 12 : 12}</p>
+                    <div className="mt-2 h-1 w-full bg-white/10 rounded-full overflow-hidden">
+                      <div className="h-full bg-blue-500 w-[60%] rounded-full"></div>
+                    </div>
+                  </div>
+                  <div className="bg-white/5 border border-white/5 rounded-xl p-4">
+                    <p className="text-slate-400 text-xs mb-1">ผู้เล่นที่กำลังหาทีม</p>
+                    <p className="text-2xl font-bold text-emerald-400">348</p>
+                    <div className="mt-2 h-1 w-full bg-white/10 rounded-full overflow-hidden">
+                      <div className="h-full bg-emerald-500 w-[85%] rounded-full"></div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <p className="text-slate-400 text-xs mb-2">อัตราการจับคู่</p>
+                  <div className="h-24 flex items-end gap-2">
+                    {[40, 70, 45, 90, 65, 85, 100, 60, 80].map((h, i) => (
+                      <div key={i} className="flex-1 bg-blue-500/20 hover:bg-blue-500/40 rounded-t-sm relative group transition-all" style={{ height: `${h}%` }}>
+                        <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 bg-slate-800 text-[10px] px-2 py-1 rounded transition-opacity">
+                          {h * 12}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* 3. Trust Badges (และอื่นๆ) */}
+        <section className="py-12 border-y border-white/10 overflow-hidden">
+          <p className="text-center text-sm font-medium text-slate-500 tracking-widest uppercase mb-8">ได้รับความไว้วางใจจากสนามและเครือข่ายกีฬาท้องถิ่นกว่า 500 แห่ง</p>
+          <div className="flex flex-wrap justify-center gap-12 md:gap-24 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
+            <div className="flex items-center gap-2 font-bold text-xl"><ShieldIcon /> FieldMaster</div>
+            <div className="flex items-center gap-2 font-bold text-xl"><UsersIcon /> ThaiSports Net</div>
+            <div className="flex items-center gap-2 font-bold text-xl"><ZapIcon /> ArenaSync</div>
+            <div className="flex items-center gap-2 font-bold text-xl"><ActivityIcon /> MatchPro</div>
+          </div>
+        </section>
+
+        {/* 4. Feature Highlights */}
+        <section id="features" className="py-24">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-bold mb-4">สร้างมาเพื่อ <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">ประสิทธิภาพสูงสุด</span></h2>
+            <p className="text-slate-400 max-w-2xl mx-auto">ทุกสิ่งที่คุณต้องการในการจัดทีม เข้าร่วม และจัดการแมตช์ฟุตบอล พร้อมความเสถียรและระบบวิเคราะห์ข้อมูลระดับองค์กร</p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            <div className="bg-white/5 border border-white/10 p-8 rounded-3xl hover:bg-white/10 transition-colors group">
+              <div className="w-12 h-12 bg-blue-500/20 rounded-2xl flex items-center justify-center text-blue-400 mb-6 group-hover:scale-110 transition-transform">
+                <ZapIcon />
+              </div>
+              <h3 className="text-xl font-bold mb-3">จับคู่แบบเรียลไทม์</h3>
+              <p className="text-slate-400 text-sm leading-relaxed">อัลกอริทึมของเราช่วยจับคู่ผู้เล่นกับสนามได้ทันที ไม่ต้องรอหรือจัดการกลุ่มไลน์ให้วุ่นวายอีกต่อไป</p>
+            </div>
+            <div className="bg-white/5 border border-white/10 p-8 rounded-3xl hover:bg-white/10 transition-colors group relative overflow-hidden">
+              <div className="absolute top-0 right-0 p-4 opacity-10 blur-[2px] group-hover:opacity-20 transition-opacity">
+                <BarChartIcon />
+              </div>
+              <div className="w-12 h-12 bg-purple-500/20 rounded-2xl flex items-center justify-center text-purple-400 mb-6 group-hover:scale-110 transition-transform">
+                <ActivityIcon />
+              </div>
+              <h3 className="text-xl font-bold mb-3">ระบบวิเคราะห์ข้อมูลขั้นสูง</h3>
+              <p className="text-slate-400 text-sm leading-relaxed">ติดตามอัตราการเข้าร่วม เวลาที่เหมาะสมที่สุดในการเล่น และสรุปการหารค่าใช้จ่ายทั้งหมดจากแมตช์ที่คุณเคยจัด</p>
+            </div>
+            <div className="bg-white/5 border border-white/10 p-8 rounded-3xl hover:bg-white/10 transition-colors group">
+              <div className="w-12 h-12 bg-emerald-500/20 rounded-2xl flex items-center justify-center text-emerald-400 mb-6 group-hover:scale-110 transition-transform">
+                <ShieldIcon />
+              </div>
+              <h3 className="text-xl font-bold mb-3">การเข้าถึงที่ปลอดภัย</h3>
+              <p className="text-slate-400 text-sm leading-relaxed">ความปลอดภัยระดับองค์กรพร้อมระบบป้องกันด้วยรหัสผ่าน รักษาแมตช์ส่วนตัวของคุณให้เป็นส่วนตัวอย่างแท้จริง</p>
             </div>
           </div>
         </section>

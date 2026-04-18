@@ -43,24 +43,7 @@ export default async function Home({
       <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-purple-600/20 blur-[120px] pointer-events-none" />
       <div className="absolute top-[40%] left-[60%] w-[30%] h-[30%] rounded-full bg-emerald-600/10 blur-[120px] pointer-events-none" />
 
-      {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#0B0F19]/60 backdrop-blur-xl border-b border-white/5">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center font-bold text-white shadow-lg shadow-blue-500/20">JS</div>
-            <span className="font-bold text-xl tracking-tight">JongSanam<span className="text-blue-500">.io</span></span>
-          </div>
-          <div className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
-            <a href="#features" className="hover:text-white transition-colors">Features</a>
-            <a href="#dashboard" className="hover:text-white transition-colors">Live Dashboard</a>
-            <a href="#pricing" className="hover:text-white transition-colors">Pricing</a>
-          </div>
-          <div className="flex items-center gap-4">
-            <Link href="/auth/login" className="text-sm font-medium hover:text-white transition-colors text-slate-300">Sign in</Link>
-            <a href="#dashboard" className="text-sm font-semibold bg-white text-slate-900 px-4 py-2 rounded-full hover:bg-slate-200 transition-colors">Get Started</a>
-          </div>
-        </div>
-      </nav>
+
 
       <div className="max-w-7xl mx-auto px-6 pt-32 pb-20 relative z-10">
         {/* Header Hero Section */}
@@ -385,64 +368,7 @@ export default async function Home({
           </div>
         </section>
 
-        {/* Pricing Table Section */}
-        <section id="pricing" className="py-24">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold mb-4">Transparent <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">Pricing</span></h2>
-            <p className="text-slate-400 max-w-2xl mx-auto">Flexible plans tailored for individual athletes and network stadium owners.</p>
-          </div>
 
-          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            {/* Free Tier */}
-            <div className="bg-white/5 border border-white/10 rounded-3xl p-8 flex flex-col">
-              <h3 className="text-xl font-bold mb-2">Free Agent</h3>
-              <p className="text-slate-400 text-sm mb-6">Perfect for players looking to join occasional matches.</p>
-              <div className="mb-6">
-                <span className="text-4xl font-bold">฿0</span><span className="text-slate-400"> /mo</span>
-              </div>
-              <ul className="space-y-3 mb-8 flex-1">
-                <li className="flex items-center gap-2 text-sm text-slate-300"><CheckCircleIcon /> View all public matches</li>
-                <li className="flex items-center gap-2 text-sm text-slate-300"><CheckCircleIcon /> Join up to 3 matches/week</li>
-                <li className="flex items-center gap-2 text-sm text-slate-300"><CheckCircleIcon /> Basic profile stats</li>
-              </ul>
-              <button className="w-full py-3 rounded-xl font-bold bg-white/10 hover:bg-white/20 transition-colors">Current Plan</button>
-            </div>
-            
-            {/* Pro Tier */}
-            <div className="bg-gradient-to-b from-blue-900/40 to-[#111827] border border-blue-500/30 rounded-3xl p-8 flex flex-col relative transform md:-translate-y-4 shadow-2xl shadow-blue-900/20">
-              <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-blue-400 to-indigo-400 rounded-t-3xl"></div>
-              <div className="bg-blue-500 text-white text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full absolute -top-3 right-8">Most Popular</div>
-              <h3 className="text-xl font-bold mb-2">Pro Athlete</h3>
-              <p className="text-blue-200/60 text-sm mb-6">Advanced analytics and unlimited matchmaking.</p>
-              <div className="mb-6">
-                <span className="text-4xl font-bold text-blue-400">฿99</span><span className="text-slate-400"> /mo</span>
-              </div>
-              <ul className="space-y-3 mb-8 flex-1">
-                <li className="flex items-center gap-2 text-sm text-slate-200"><CheckCircleIcon /> Unlimited match joins</li>
-                <li className="flex items-center gap-2 text-sm text-slate-200"><CheckCircleIcon /> Create unlimited private matches</li>
-                <li className="flex items-center gap-2 text-sm text-slate-200"><CheckCircleIcon /> Player performance analytics</li>
-                <li className="flex items-center gap-2 text-sm text-slate-200"><CheckCircleIcon /> Priority booking access</li>
-              </ul>
-              <button className="w-full py-3 rounded-xl font-bold bg-blue-600 hover:bg-blue-500 transition-colors shadow-lg shadow-blue-500/25">Upgrade to Pro</button>
-            </div>
-
-            {/* Stadium Tier */}
-            <div className="bg-white/5 border border-white/10 rounded-3xl p-8 flex flex-col">
-              <h3 className="text-xl font-bold mb-2">Stadium Partner</h3>
-              <p className="text-slate-400 text-sm mb-6">Complete management system for facility owners.</p>
-              <div className="mb-6">
-                <span className="text-4xl font-bold">฿999</span><span className="text-slate-400"> /mo</span>
-              </div>
-              <ul className="space-y-3 mb-8 flex-1">
-                <li className="flex items-center gap-2 text-sm text-slate-300"><CheckCircleIcon /> Direct api integration</li>
-                <li className="flex items-center gap-2 text-sm text-slate-300"><CheckCircleIcon /> Revenue dashboard</li>
-                <li className="flex items-center gap-2 text-sm text-slate-300"><CheckCircleIcon /> Automated slot publishing</li>
-                <li className="flex items-center gap-2 text-sm text-slate-300"><CheckCircleIcon /> 24/7 dedicated support</li>
-              </ul>
-              <button className="w-full py-3 rounded-xl font-bold bg-white/10 hover:bg-white/20 transition-colors">Contact Sales</button>
-            </div>
-          </div>
-        </section>
 
         {/* Footer */}
         <footer className="py-8 border-t border-white/5 mt-12 text-center text-slate-500 text-sm">
